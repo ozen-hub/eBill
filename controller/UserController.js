@@ -1,5 +1,6 @@
 const UserSchema = require('../model/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const signup = (req, resp) => {
 
@@ -7,7 +8,7 @@ const signup = (req, resp) => {
     UserSchema.findOne({email: req.body.email}).then(existsData => {
         if (existsData === null) {
 
-            bcrypt.hash(req.body.password, 10, function(err, hash) {
+            bcrypt.hash(req.body.password, 10, function (err, hash) {
 
                 const user = new UserSchema({
                     email: req.body.email,
@@ -16,7 +17,15 @@ const signup = (req, resp) => {
                 });
 
                 user.save().then(result => {
-                    resp.json({data: {status: 201, message: "Registered", result}});
+                    const token = jwt.sign(
+                        {email: req.body.email, fullName: req.body.fullName},
+                        'secret', {expiresIn: '24h'}, process.env.JWT_TOKEN_SECRET);
+                    resp.json({
+                        data:
+                            {status: 201, message: "Registered", token}
+                    });
+
+
                 }).catch(error => {
                     console.log(error);
                     resp.json(error);
