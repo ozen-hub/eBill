@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const signup = (req, resp) => {
-
-
     UserSchema.findOne({email: req.body.email}).then(existsData => {
         if (existsData === null) {
 
@@ -43,6 +41,36 @@ const signup = (req, resp) => {
 
 
 };
+const login =(req,resp)=>{
+    UserSchema.findOne({email:req.body.email}).then(existsData=>{
+        if (existsData!==null){
+
+            bcrypt.compare(req.body.password, existsData.password, function(err, result) {
+                if (result){
+
+                    const token = jwt.sign(
+                        {email: existsData.email, fullName: existsData.fullName},
+                        'secret', {expiresIn: '24h'}, process.env.JWT_TOKEN_SECRET);
+                    resp.json({
+                        data:
+                            {status: 200, message: "logged in", token}
+                    });
+
+                }else{
+                    resp.status(401).json({record:'Password is incorrect!'});
+                }
+            });
+
+        }else{
+            resp.status(404).json({record:'user name not found'});
+        }
+    })
+    // email check
+    // pwd check
+    // token
+}
+
 module.exports = {
-    signup
+    signup,
+    login
 }
