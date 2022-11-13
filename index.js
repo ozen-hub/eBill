@@ -2,6 +2,7 @@ const express = require('express'); // npm i express [if ubuntu,linux,mac] => su
 // nodemon => keep running => npm i -g nodemon
 const bodyParser = require('body-parser'); // npm i body-parser
 const mongoose= require('mongoose'); // npm i mongoose
+const cors = require('cors') // npm i cors
 require('dotenv').config();
 const port=process.env.SERVER_PORT; // npm i dotenv
 const base_url=process.env.BASE_URL;
@@ -12,6 +13,7 @@ const userRoute = require('./route/UserRoute');
 //========================
 
 const app = express();
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
