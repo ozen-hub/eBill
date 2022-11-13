@@ -4,9 +4,11 @@ const bodyParser = require('body-parser'); // npm i body-parser
 const mongoose= require('mongoose'); // npm i mongoose
 require('dotenv').config();
 const port=process.env.SERVER_PORT; // npm i dotenv
+const base_url=process.env.BASE_URL;
 
 //========================
 const customerRoute = require('./route/CustomerRoute');
+const userRoute = require('./route/UserRoute');
 //========================
 
 const app = express();
@@ -28,5 +30,6 @@ app.post('/',(req,resp)=>{
     resp.json({data:'success!'});
 });
 //============================
-app.use('/api/v1/customer',customerRoute); // http://localhost:3000/api/v1/customer/save
+app.use(base_url+'customer',customerRoute); // http://localhost:3000/api/v1/customer/save
+app.use(base_url+'user',userRoute);
 //============================
