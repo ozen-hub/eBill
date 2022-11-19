@@ -15,6 +15,7 @@ const saveCustomer=(req,resp)=>{
     })
 };
 const updateCustomer=(req,resp)=>{// findOneAndUpdate
+    console.log(req.headers.id)
     CustomerSchema.updateOne({_id:req.headers.id},{$set:{
             name: req.body.name,
             address: req.body.address,

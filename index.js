@@ -10,6 +10,7 @@ const base_url=process.env.BASE_URL;
 //========================
 const customerRoute = require('./route/CustomerRoute');
 const userRoute = require('./route/UserRoute');
+const productRoute = require('./route/ProductRoute');
 //========================
 
 const app = express();
@@ -34,4 +35,5 @@ app.post('/',(req,resp)=>{
 //============================
 app.use(base_url+'customer',customerRoute); // http://localhost:3000/api/v1/customer/save
 app.use(base_url+'user',userRoute);
+app.use(base_url+'product',productRoute);
 //============================
