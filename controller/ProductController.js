@@ -23,6 +23,19 @@ const getAllProducts=(req,resp)=>{
     })
 }
 
+const getAllProductIds=(req,resp)=>{
+    ProductSchema.find().then(result=>{
+        let ids = new Array();
+        for (const data of result){
+            ids.push({id:data._id,description:data.description});
+        }
+        resp.json({data:{status:201,value:ids}});
+    }).catch(error=>{
+        console.log(error);
+        resp.json(error);
+    })
+}
+
 module.exports={
-    saveProduct,getAllProducts
+    saveProduct,getAllProducts,getAllProductIds
 }

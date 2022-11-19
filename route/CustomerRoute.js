@@ -8,4 +8,5 @@ router.put('/update', customerController.updateCustomer);
 router.delete('/delete', customerController.deleteCustomer);
 router.get('/get', customerController.getCustomer);
 router.get('/list', customerController.getAllCustomers); // pagination ==> search =>
+router.get('/id-list', customerController.getAllCustomerIds);
 module.exports = router;

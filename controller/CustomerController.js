@@ -1,6 +1,7 @@
 const CustomerSchema = require('../model/Customer');
 
 
+
 const saveCustomer=(req,resp)=>{
     const customer= new CustomerSchema({
         name: req.body.name,
@@ -53,10 +54,24 @@ const getAllCustomers=(req,resp)=>{
     })
 };
 
+const getAllCustomerIds=(req,resp)=>{
+    CustomerSchema.find().then(result=>{
+        let ids = new Array();
+        for (const data of result){
+            ids.push({id:data._id,name:data.name});
+        }
+        resp.json({data:{status:201,value:ids}});
+    }).catch(error=>{
+        console.log(error);
+        resp.json(error);
+    })
+}
+
 module.exports = {
     saveCustomer,
     updateCustomer,
     deleteCustomer,
     getCustomer,
-    getAllCustomers
+    getAllCustomers,
+    getAllCustomerIds
 }
