@@ -28,7 +28,7 @@ mongoose.connect('mongodb://localhost:27017/ebill').then(()=>{
     console.log(err);
 })
 
-app.post('/',(req,resp)=>{
+app.get('/',(req,resp)=>{
     console.log(req.body);
     resp.json({data:'success!'});
 });
